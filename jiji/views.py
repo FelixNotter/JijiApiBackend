@@ -50,12 +50,20 @@ def getProduct(request,_id):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
     
-@api_view(['GET'])
-def allCarts(request):
+@api_view(['GET','POST'])
+def carts(request):
     if request.method=='GET':
         carts = cart.objects.all()
         serializer = cartSerializer(carts,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+    elif request.method=='POST':
+        serializer = cartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    
+
 
 @api_view(['DELETE','PATCH'])
 def updateCart(request,_id):
