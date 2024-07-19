@@ -22,7 +22,7 @@ class product(models.Model):
     stock_quantity = models.IntegerField()
     category_id = models.ForeignKey(category, on_delete=models.CASCADE)
     region_id = models.ForeignKey(region, on_delete=models.CASCADE)
-    product_url = models.charfield(null=True,blank=True,max_length=100000)
+    product_url = models.CharField(null=True,blank=True,max_length=100000)
     
     def __str__(self):
         return self.name
